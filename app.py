@@ -7,9 +7,6 @@ from datetime import timedelta
 # decorator for routes that should be accessible only by logged in users
 from auth_decorator import login_required
 
-# dotenv setup
-
-
 # App config
 app = Flask(__name__)
 # Session config
