@@ -8,5 +8,11 @@
 	</head>
 	<body>
 		<p>Hello {{email}}</p>
+		<input type="file" id="fileUpload" onchange="handleFileUpload()" />
+		<script>
+			function handleFileUpload() {
+				console.log("handleFileUpload is triggered");
+			}
+		</script>
 	</body>
 </html>
