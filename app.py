@@ -1,5 +1,5 @@
 # AS simeple as possbile flask google oAuth 2.0
-from flask import Flask, redirect, url_for, session, render_template
+from flask import Flask, redirect, url_for, session, render_template, request
 from authlib.integrations.flask_client import OAuth
 import os
 from datetime import timedelta
@@ -35,7 +35,12 @@ def hello_world():
     # returs You aint logged in, no page for u! if because of @login_required
     email = dict(session)['profile']['email']
     return render_template("index.html", email=email)
+    
 
+@app.route('/api', methods=['POST'])
+def addRegion():
+    hashFromFile = request.form.get("hashFromFile")
+    return 'The hash recevied is ' + hashFromFile
 
 @app.route('/login')
 def login():

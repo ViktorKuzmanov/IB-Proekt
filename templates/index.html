@@ -10,6 +10,10 @@
 	<body>
 		<p>Hello {{email}}</p>
 		<input type="file" id="fileUpload" onchange="fileChange(event)" />
+		<form action="/api" method="post">
+			<input type="text" id="hashFromFile" name="hashFromFile" value="defaultHash" />
+			<input type="submit" />
+		</form>
 		<script>
 			fileChange = (event) => {
 				var file = event.target.files[0];
@@ -19,7 +23,7 @@
 				fileReader.addEventListener("loadend", (evt) => {
 					if (evt.target.readyState == FileReader.DONE) {
 						const hash = CryptoJS.SHA256(fileReader.result);
-						console.log("hsbre " + hash.toString());
+						document.getElementById("hashFromFile").value = hash.toString();
 					}
 				});
 
