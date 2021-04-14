@@ -29,12 +29,6 @@ google = oauth.register(
     client_kwargs={'scope': 'openid email profile'},
 )
 
-@app.route('/api', methods=['GET'])
-def api():
-    return {
-        "email":"viktor4@gmail.com"
-    }
-
 @app.route('/')
 @login_required
 def hello_world():
