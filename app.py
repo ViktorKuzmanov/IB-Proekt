@@ -1,5 +1,5 @@
 # AS simeple as possbile flask google oAuth 2.0
-from flask import Flask, redirect, url_for, session
+from flask import Flask, redirect, url_for, session, render_template
 from authlib.integrations.flask_client import OAuth
 import os
 from datetime import timedelta
@@ -29,13 +29,18 @@ google = oauth.register(
     client_kwargs={'scope': 'openid email profile'},
 )
 
+@app.route('/api', methods=['GET'])
+def api():
+    return {
+        "email":"viktor4@gmail.com"
+    }
 
 @app.route('/')
 @login_required
 def hello_world():
+    # returs You aint logged in, no page for u! if because of @login_required
     email = dict(session)['profile']['email']
-    result = "Hello you are loggegd as " + str(email) 
-    return result
+    return render_template("index.html", email=email)
 
 
 @app.route('/login')
