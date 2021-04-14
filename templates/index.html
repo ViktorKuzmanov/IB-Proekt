@@ -5,34 +5,26 @@
 		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Document</title>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.9-1/crypto-js.js"></script>
 	</head>
 	<body>
 		<p>Hello {{email}}</p>
-		<input type="file" id="fileUpload" onchange="handleFileUpload(event)" />
+		<input type="file" id="fileUpload" onchange="fileChange(event)" />
 		<script>
-			function handleFileUpload(e) {
-				console.log("handleFileUpload is triggered");
-				const file = e.target.files[0];
-				console.log(
-					sha256(file).then((fileHash) => {
-						console.log(fileHash);
-					})
-				);
-			}
-			async function sha256(message) {
-				// encode as UTF-8
-				const msgBuffer = new TextEncoder().encode(message);
+			fileChange = (event) => {
+				var file = event.target.files[0];
 
-				// hash the message
-				const hashBuffer = await crypto.subtle.digest("SHA-256", msgBuffer);
+				const fileReader = new FileReader();
 
-				// convert ArrayBuffer to Array
-				const hashArray = Array.from(new Uint8Array(hashBuffer));
+				fileReader.addEventListener("loadend", (evt) => {
+					if (evt.target.readyState == FileReader.DONE) {
+						const hash = CryptoJS.SHA256(fileReader.result);
+						console.log("hsbre " + hash.toString());
+					}
+				});
 
-				// convert bytes to hex string
-				const hashHex = hashArray.map((b) => b.toString(16).padStart(2, "0")).join("");
-				return hashHex;
-			}
+				fileReader.readAsDataURL(file);
+			};
 		</script>
 	</body>
 </html>
