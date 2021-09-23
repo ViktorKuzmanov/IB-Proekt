@@ -2,6 +2,13 @@
 from flask import Flask, redirect, url_for, session, render_template, request
 from authlib.integrations.flask_client import OAuth
 import os
+from hashlib import blake2b
+import time
+import datetime
+from datetime import date
+
+from datetime import datetime
+
 from datetime import timedelta
 
 # decorator for routes that should be accessible only by logged in users
@@ -40,12 +47,17 @@ def hello_world():
 @app.route('/api', methods=['POST'])
 def addRegion():
     hashFromFile = request.form.get("hashFromFile")
-    return 'The hash recevied is ' + hashFromFile
+    now = datetime.now()
+    print (now.strftime("%Y-%m-%d %H:%M:%S"))
+
+
+    return 'The timestamp is ' + hashFromFile  + now.strftime("%Y-%m-%d %H:%M:%S")
 
 @app.route('/login')
 def login():
     google = oauth.create_client('google')  # create the google oauth client
     redirect_uri = url_for('authorize', _external=True)
+
     return google.authorize_redirect(redirect_uri)
 
 
