@@ -43,13 +43,20 @@ def hello_world():
     email = dict(session)['profile']['email']
     return render_template("index.html", email=email)
     
+import hashlib
+
 
 @app.route('/api', methods=['POST'])
 def addRegion():
     hashFromFile = request.form.get("hashFromFile")
     timeStamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    return 'The hash is ' + hashFromFile + " and the timestamp is = " + timeStamp
+    spoeniHashTimestamp = hashFromFile + timeStamp
+
+    hash_object = hashlib.sha256(spoeniHashTimestamp.encode())
+    hex_dig = hash_object.hexdigest()
+
+    return "voa e dobieniot hash od hashFile + timestamp = " + hex_dig
 
 @app.route('/login')
 def login():
