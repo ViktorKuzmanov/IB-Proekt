@@ -47,11 +47,9 @@ def hello_world():
 @app.route('/api', methods=['POST'])
 def addRegion():
     hashFromFile = request.form.get("hashFromFile")
-    now = datetime.now()
-    print (now.strftime("%Y-%m-%d %H:%M:%S"))
+    timeStamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-
-    return 'The timestamp is ' + hashFromFile  + now.strftime("%Y-%m-%d %H:%M:%S")
+    return 'The hash is ' + hashFromFile + " and the timestamp is = " + timeStamp
 
 @app.route('/login')
 def login():
